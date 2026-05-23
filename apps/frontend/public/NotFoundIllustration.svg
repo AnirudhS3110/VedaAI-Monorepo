@@ -1,0 +1,32 @@
+<svg width="280" height="280" viewBox="40 35 220 230" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Empty assignments">
+  <circle cx="150" cy="150" r="118" fill="url(#empty-bg)"/>
+  <g filter="url(#card-shadow)">
+    <rect x="89" y="72" width="124" height="155" rx="14" fill="white"/>
+  </g>
+  <rect x="100" y="92" width="50" height="10" rx="5" fill="#011625"/>
+  <rect x="100" y="118" width="100" height="10" rx="5" fill="#D5D5D5"/>
+  <rect x="100" y="144" width="100" height="10" rx="5" fill="#D5D5D5"/>
+  <rect x="100" y="170" width="100" height="10" rx="5" fill="#D5D5D5"/>
+  <rect x="100" y="196" width="72" height="10" rx="5" fill="#D5D5D5"/>
+  <g filter="url(#badge-shadow)">
+    <rect x="198" y="58" width="58" height="36" rx="8" fill="white"/>
+  </g>
+  <circle cx="214" cy="76" r="6" fill="#CCC6D9"/>
+  <rect x="226" y="70" width="24" height="12" rx="6" fill="#D5D5D5"/>
+  <path d="M185 118C210 118 230 138 230 163C230 188 210 208 185 208C160 208 140 188 140 163C140 138 160 118 185 118ZM185 128C166 128 151 143 151 163C151 183 166 198 185 198C204 198 219 183 219 163C219 143 204 128 185 128Z" fill="#E8E4EF"/>
+  <circle cx="185" cy="163" r="38" fill="white" fill-opacity="0.35"/>
+  <path d="M194 163L207 150C208.5 148.4 209.2 146.2 209 144.2C208.8 142.2 207.7 140.3 206 139C204.3 137.7 202.1 137.2 200.2 137.5C198.3 137.8 196.6 138.9 195.5 140.5L185 153L174.5 140.5C173.4 138.9 171.7 137.8 169.8 137.5C167.9 137.2 165.7 137.7 164 139C162.3 140.3 161.2 142.2 161 144.2C160.8 146.2 161.5 148.4 163 150L176 163L163 176C161.5 177.6 160.8 179.8 161 181.8C161.2 183.8 162.3 185.7 164 187C165.7 188.3 167.9 188.8 169.8 188.5C171.7 188.2 173.4 187.1 174.5 185.5L185 172L195.5 185.5C196.8 187 198.8 187.8 200.9 187.6C203 187.4 204.8 186.2 206 184.3C207.2 182.4 207.4 180 206.5 177.9L194 163Z" fill="#FF4040" opacity="0.9"/>
+  <circle cx="248" cy="188" r="5" fill="#417BA4" opacity="0.7"/>
+  <defs>
+    <linearGradient id="empty-bg" x1="150" y1="32" x2="150" y2="268" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F4F5"/>
+      <stop offset="1" stop-color="#ECECEC"/>
+    </linearGradient>
+    <filter id="card-shadow" x="59" y="52" width="184" height="215" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#919191" flood-opacity="0.16"/>
+    </filter>
+    <filter id="badge-shadow" x="190" y="50" width="74" height="52" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="4" dy="3" stdDeviation="5" flood-color="#1a6a8a" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+</svg>

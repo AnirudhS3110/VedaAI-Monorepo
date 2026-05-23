@@ -1,0 +1,10 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <rect width="36" height="36" rx="10" fill="url(#veda-gradient)"/>
+  <path d="M10 10L18 26L26 10H22L18 18.5L14 10H10Z" fill="white"/>
+  <defs>
+    <linearGradient id="veda-gradient" x1="6" y1="4" x2="30" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F97316"/>
+      <stop offset="1" stop-color="#DC2626"/>
+    </linearGradient>
+  </defs>
+</svg>
