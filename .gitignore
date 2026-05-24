@@ -37,9 +37,9 @@ temp/
 # PDF storage
 apps/backend/storage/pdfs/
 
-# Excalidraw exports
-architecture/*.png
-architecture/*.jpg
+# # Excalidraw exports
+# architecture/*.png
+# architecture/*.jpg
 
 # Optional
 *.zip
