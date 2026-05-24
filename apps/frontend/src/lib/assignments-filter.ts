@@ -1,3 +1,4 @@
+import { parse, parseISO } from "date-fns";
 import type { AssignmentListItem } from "@/stores/assignments-store";
 import type { AssignmentStatus } from "@/types/domain";
 
@@ -53,9 +54,21 @@ function matchesStatus(
   return item.status === filter;
 }
 
-function parseDate(value: string): number {
-  const t = Date.parse(value);
-  return Number.isNaN(t) ? 0 : t;
+function parseCreatedAt(iso: string): number {
+  try {
+    return parseISO(iso).getTime();
+  } catch {
+    return 0;
+  }
+}
+
+/** Display dates are stored as dd-MM-yyyy; parse explicitly for sorting. */
+function parseDueDate(display: string): number {
+  try {
+    return parse(display, "dd-MM-yyyy", new Date()).getTime();
+  } catch {
+    return 0;
+  }
 }
 
 export function filterAssignments(
@@ -69,15 +82,16 @@ export function filterAssignments(
   let result = items.filter((item) => {
     if (!matchesStatus(item, statusFilter)) return false;
     if (!q) return true;
-    return item.title.toLowerCase().includes(q);
+    const haystack = `${item.title} ${item.subject}`.toLowerCase();
+    return haystack.includes(q);
   });
 
   result = [...result].sort((a, b) => {
     if (sort === "due_soon") {
-      return parseDate(a.dueDate) - parseDate(b.dueDate);
+      return parseDueDate(a.dueDate) - parseDueDate(b.dueDate);
     }
-    const aTime = parseDate(a.assignedOn);
-    const bTime = parseDate(b.assignedOn);
+    const aTime = parseCreatedAt(a.createdAt);
+    const bTime = parseCreatedAt(b.createdAt);
     return sort === "newest" ? bTime - aTime : aTime - bTime;
   });
 

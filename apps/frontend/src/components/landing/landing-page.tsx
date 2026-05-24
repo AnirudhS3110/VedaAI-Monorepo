@@ -14,7 +14,7 @@ import { TrustStripSection } from "./sections/trust-strip-section";
 
 export function LandingPage() {
   return (
-    <div className="relative h-dvh overflow-x-hidden overflow-y-auto overflow-touch bg-workspace">
+    <div className="relative h-dvh scroll-smooth overflow-x-hidden overflow-y-auto overflow-touch bg-workspace scroll-pt-20">
       <div
         className="pointer-events-none fixed inset-0 bg-gradient-to-b from-orange-500/[0.03] via-transparent to-transparent"
         aria-hidden

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { handleLandingAnchorClick } from "@/lib/landing-scroll";
 import { GlowOrb, LandingGridBackground, SectionLabel } from "../landing-visuals";
 import { fadeUpHero } from "../motion";
 import { HeroDashboardPreview } from "../previews/hero-dashboard-preview";
@@ -82,7 +83,12 @@ export function HeroSection() {
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 rounded-2xl border-border/80 bg-card/50 backdrop-blur-sm">
-              <a href="#architecture">View Architecture</a>
+              <a
+                href="#architecture"
+                onClick={(e) => handleLandingAnchorClick(e, "#architecture")}
+              >
+                View Architecture
+              </a>
             </Button>
           </motion.div>
         </div>

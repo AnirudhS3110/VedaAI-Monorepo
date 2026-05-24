@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Code2 } from "lucide-react";
 import { VedaLogo } from "@/components/layout/veda-logo";
+import { handleLandingAnchorClick } from "@/lib/landing-scroll";
 
 const links = [
   { label: "GitHub", href: "https://github.com/AnirudhS3110/VedaAI-Monorepo",logo: <Code2 className="size-4" />, external: true },
@@ -20,16 +21,28 @@ export function LandingFooter() {
           </p>
         </div>
         <nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
-          {links.map(({ label, href, external }) => (
-            <Link
-              key={label}
-              href={href}
-              className="text-muted-foreground transition-colors hover:text-foreground"
-              {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            >
-              {label}
-            </Link>
-          ))}
+          {links.map(({ label, href, external }) =>
+            external ? (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {label}
+              </a>
+            ) : (
+              <a
+                key={label}
+                href={href}
+                onClick={(e) => handleLandingAnchorClick(e, href)}
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {label}
+              </a>
+            ),
+          )}
         </nav>
       </div>
       <p className="mx-auto mt-10 max-w-6xl border-t border-border/40 pt-8 text-center text-xs text-muted-foreground sm:text-left">

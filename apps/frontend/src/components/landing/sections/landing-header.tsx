@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VedaLogo } from "@/components/layout/veda-logo";
+import { handleLandingAnchorClick } from "@/lib/landing-scroll";
 import { cn } from "@/lib/utils";
 import { fadeUpHero } from "../motion";
 
@@ -48,6 +49,11 @@ export function LandingHeader() {
               href={link.href}
               target={"external" in link && link.external ? "_blank" : undefined}
               rel={"external" in link && link.external ? "noopener noreferrer" : undefined}
+              onClick={
+                "external" in link && link.external
+                  ? undefined
+                  : (e) => handleLandingAnchorClick(e, link.href)
+              }
               className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
             >
               {link.label}

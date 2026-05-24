@@ -46,7 +46,7 @@ export function HomeContinueWorking({ items, isLoading }: HomeContinueWorkingPro
           </Link>
         </div>
       ) : (
-        <div className="-mx-1 flex gap-3 overflow-x-auto overflow-y-hidden pb-1 px-1 snap-x snap-mandatory">
+        <div className="scrollbar-hide -mx-1 flex gap-3 overflow-x-auto overflow-y-hidden pb-1 px-1 snap-x snap-mandatory">
           {items.map((assignment) => (
             <div key={assignment.id} className="snap-start">
               <HomeContinueCard assignment={assignment} />

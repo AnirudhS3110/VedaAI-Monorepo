@@ -92,7 +92,10 @@ export function AssignmentsFilterMenu({
                   type="button"
                   role="option"
                   aria-selected={statusFilter === opt.value}
-                  onClick={() => onStatusChange(opt.value)}
+                  onClick={() => {
+                    onStatusChange(opt.value);
+                    setOpen(false);
+                  }}
                   className={cn(
                     "flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm transition-colors",
                     statusFilter === opt.value
@@ -119,7 +122,10 @@ export function AssignmentsFilterMenu({
                   type="button"
                   role="option"
                   aria-selected={sort === opt.value}
-                  onClick={() => onSortChange(opt.value)}
+                  onClick={() => {
+                    onSortChange(opt.value);
+                    setOpen(false);
+                  }}
                   className={cn(
                     "flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm transition-colors",
                     sort === opt.value

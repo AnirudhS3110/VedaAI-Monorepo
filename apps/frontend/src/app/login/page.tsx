@@ -15,7 +15,7 @@ export default async function LoginPage({
   const params = await searchParams;
 
   if (session?.user) {
-    redirect(params.callbackUrl ?? "/assignments");
+    redirect(params.callbackUrl ?? "/home");
   }
 
   return (
@@ -49,7 +49,7 @@ export default async function LoginPage({
             action={async () => {
               "use server";
               await signIn("google", {
-                redirectTo: params.callbackUrl ?? "/assignments",
+                redirectTo: params.callbackUrl ?? "/home",
               });
             }}
           >

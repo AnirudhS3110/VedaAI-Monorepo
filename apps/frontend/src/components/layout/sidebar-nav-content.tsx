@@ -41,7 +41,7 @@ export function SidebarNavContent({
   return (
     <div className={cn("flex h-full flex-col", className)}>
       {showLogo && (
-        <VedaLogo className="px-1" href="/assignments" onNavigate={onNavigate} />
+        <VedaLogo className="px-1" href="/home" onNavigate={onNavigate} />
       )}
 
       {showCreateButton && (

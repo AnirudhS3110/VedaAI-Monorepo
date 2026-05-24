@@ -7,12 +7,17 @@ export interface MobileTopbarConfig {
 }
 
 const breadcrumbLabels: Record<string, string> = {
+  home: "Home",
   assignments: "Assignments",
   create: "Create Assignment",
   generating: "Generating",
 };
 
 function getInnerTitle(pathname: string): string {
+  if (pathname === "/home" || pathname === "/") {
+    return "Home";
+  }
+
   const segments = pathname.split("/").filter(Boolean);
   const last = segments[segments.length - 1];
 
@@ -24,7 +29,7 @@ function getInnerTitle(pathname: string): string {
     return "Assignment";
   }
 
-  return "Assignment";
+  return "Home";
 }
 
 export function getMobileTopbarConfig(pathname: string): MobileTopbarConfig {
@@ -64,8 +69,11 @@ export function getMobileTopbarConfig(pathname: string): MobileTopbarConfig {
   return { variant: "brand-only" };
 }
 
-/** Desktop breadcrumb label (unchanged behavior) */
+/** Desktop breadcrumb label in the top app bar */
 export function getDesktopBreadcrumb(pathname: string): string {
+  if (pathname === "/home" || pathname === "/") {
+    return "Home";
+  }
   return getInnerTitle(pathname);
 }
 
