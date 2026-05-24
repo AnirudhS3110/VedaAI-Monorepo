@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowLeft, Bell, ChevronDown, LayoutGrid } from "lucide-react";
+import { ArrowLeft, Bell, LayoutGrid } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/layout/user-avatar";
@@ -62,7 +62,6 @@ function TopbarActions({
         <span className="hidden max-w-[140px] truncate text-sm font-medium lg:inline">
           {displayName}
         </span>
-        <ChevronDown className="hidden size-4 text-muted-foreground lg:block" />
       </button>
 
       {showMenu && (

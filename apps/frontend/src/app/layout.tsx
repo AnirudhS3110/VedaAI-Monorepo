@@ -18,6 +18,10 @@ export const metadata: Metadata = {
   title: "VedaAI — AI-powered assessment generation",
   description:
     "Generate structured question papers with real-time AI workflows, semantic validation, and PDF export.",
+  icons: {
+    icon: [{ url: "/vedaai-logo.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/vedaai-logo.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({

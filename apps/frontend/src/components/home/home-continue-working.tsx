@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { AssignmentListItem } from "@/stores/assignments-store";
 import { HomeContinueCard } from "./home-continue-card";
+import { HomeContinueCardSkeleton } from "./home-continue-card-skeleton";
 import { HomeSection } from "./home-section";
 
 interface HomeContinueWorkingProps {
@@ -25,12 +26,15 @@ export function HomeContinueWorking({ items, isLoading }: HomeContinueWorkingPro
       }
     >
       {isLoading ? (
-        <div className="flex gap-3 overflow-hidden">
+        <div
+          className="scrollbar-hide -mx-1 flex gap-3 overflow-x-auto overflow-y-hidden pb-1 px-1"
+          aria-busy="true"
+          aria-label="Loading recent assignments"
+        >
           {[1, 2, 3].map((i) => (
-            <div
-              key={i}
-              className="h-40 min-w-[16.5rem] animate-pulse rounded-2xl bg-muted/60"
-            />
+            <div key={i} className="snap-start">
+              <HomeContinueCardSkeleton />
+            </div>
           ))}
         </div>
       ) : items.length === 0 ? (

@@ -10,6 +10,7 @@ import { LandingHeader } from "./sections/landing-header";
 import { MobileExperienceSection } from "./sections/mobile-experience-section";
 import { ProblemSolutionSection } from "./sections/problem-solution-section";
 import { ProductPreviewSection } from "./sections/product-preview-section";
+import { TemplatesSection } from "./sections/templates-section";
 import { TrustStripSection } from "./sections/trust-strip-section";
 
 export function LandingPage() {
@@ -25,6 +26,7 @@ export function LandingPage() {
         <TrustStripSection />
         <ProblemSolutionSection />
         <FeatureGridSection />
+        <TemplatesSection />
         {/* <HowItWorksSection /> */}
         <ArchitectureSection />
         {/* <ProductPreviewSection />

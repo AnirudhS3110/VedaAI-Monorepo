@@ -6,6 +6,7 @@ import { handleLandingAnchorClick } from "@/lib/landing-scroll";
 const links = [
   { label: "GitHub", href: "https://github.com/AnirudhS3110/VedaAI-Monorepo",logo: <Code2 className="size-4" />, external: true },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/anirudh-selvakumar31/", external: true },
+  { label: "Templates", href: "#templates", external: false },
   { label: "Architecture", href: "#architecture", external: false },
 ] as const;
 
