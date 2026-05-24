@@ -5,7 +5,7 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 function pdfFetchInit(): RequestInit {
   const userId = getApiUserId();
-  if (!userId) return {};
+  if (!userId) throw new Error("Not authenticated. Please sign in to download PDFs.");
   return { headers: { "X-User-Id": userId } };
 }
 

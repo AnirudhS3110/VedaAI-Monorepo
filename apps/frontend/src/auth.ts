@@ -1,7 +1,9 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-const apiUrl = "https://vedaaiv1-anirudhs.vercel.app";
+// Fixed: was hardcoded to the Vercel *frontend* URL instead of the backend.
+// NEXT_PUBLIC_API_URL already points to the correct backend (Railway/localhost).
+const backendUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
 async function syncUserWithBackend(profile: {
   email?: string | null;
@@ -18,19 +20,28 @@ async function syncUserWithBackend(profile: {
     headers["X-Auth-Sync-Secret"] = process.env.AUTH_SYNC_SECRET;
   }
 
-  const response = await fetch(`${apiUrl}/api/users/sync`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      email: profile.email,
-      name: profile.name ?? "Teacher",
-      image: profile.picture ?? "",
-      provider: "google",
-    }),
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${backendUrl}/api/users/sync`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        email: profile.email,
+        name: profile.name ?? "Teacher",
+        image: profile.picture ?? "",
+        provider: "google",
+      }),
+    });
+  } catch (networkError) {
+    console.error("[auth] User sync network error:", networkError);
+    return undefined;
+  }
 
   if (!response.ok) {
-    console.error("User sync failed", await response.text());
+    const text = await response.text().catch(() => "<unreadable>");
+    console.error(
+      `[auth] User sync failed: HTTP ${response.status} from ${backendUrl}. Body: ${text}`,
+    );
     return undefined;
   }
 
@@ -38,6 +49,11 @@ async function syncUserWithBackend(profile: {
     success: boolean;
     data: { userId: string };
   };
+
+  if (!json.success || !json.data?.userId) {
+    console.error("[auth] User sync returned unexpected payload:", json);
+    return undefined;
+  }
 
   return json.data.userId;
 }
