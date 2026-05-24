@@ -42,7 +42,7 @@ export function AssignmentAiBanner({
         disabled={isDownloading || !onDownloadPdf}
         onClick={onDownloadPdf}
         className={cn(
-          "touch-manipulation tap-highlight-none rounded-xl border-white/20 bg-white text-[#1a1a1a] active:scale-95 lg:hover:bg-white/90 disabled:opacity-70",
+          "touch-manipulation cursor-pointer tap-highlight-none rounded-xl border-white/20 bg-white text-[#1a1a1a] active:scale-95 lg:hover:bg-white/90 disabled:opacity-70",
           "absolute bottom-3 left-3 size-11 p-0 sm:static sm:mt-4 sm:h-10 sm:w-auto sm:px-4",
         )}
         aria-label={isDownloading ? "Preparing PDF" : "Download as PDF"}

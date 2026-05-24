@@ -7,22 +7,28 @@ import { cn } from "@/lib/utils";
 interface VoiceInputButtonProps {
   isListening: boolean;
   isSupported: boolean;
+  unsupportedHint?: string | null;
   onToggle: () => void;
 }
 
 export function VoiceInputButton({
   isListening,
   isSupported,
+  unsupportedHint,
   onToggle,
 }: VoiceInputButtonProps) {
+  const title =
+    unsupportedHint ??
+    (isListening ? "Stop listening" : "Speak to add instructions");
+
   if (!isSupported) {
     return (
       <button
         type="button"
         disabled
         className="absolute bottom-3 right-3 flex size-10 cursor-not-allowed items-center justify-center rounded-xl text-muted-foreground/50"
-        title="Voice input is not supported in this browser"
-        aria-label="Voice input not supported"
+        title={title}
+        aria-label={title}
       >
         <MicOff className="size-5" />
       </button>
@@ -40,7 +46,7 @@ export function VoiceInputButton({
           : "text-muted-foreground active:bg-muted lg:hover:bg-muted lg:hover:text-foreground",
       )}
       aria-label={isListening ? "Stop voice input" : "Start voice input"}
-      title={isListening ? "Stop listening" : "Speak to add instructions"}
+      title={title}
     >
       {isListening && (
         <motion.span

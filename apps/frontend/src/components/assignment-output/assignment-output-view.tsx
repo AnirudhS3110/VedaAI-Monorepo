@@ -78,7 +78,10 @@ export function AssignmentOutputView({
     void load();
   }, [load]);
 
-  useAssignmentGenerationSocket({ assignmentId });
+  useAssignmentGenerationSocket({
+    assignmentId,
+    resetOnMount: false,
+  });
 
   const handleDownloadPdf = async () => {
     setPdfLoading(true);

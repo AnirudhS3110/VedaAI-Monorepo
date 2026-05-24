@@ -67,6 +67,8 @@ const toListItem = (document: AssignmentDocument): AssignmentListItemResponse =>
   dueDate: document.dueDate.toISOString(),
   status: document.status,
   createdAt: document.createdAt.toISOString(),
+  updatedAt: document.updatedAt.toISOString(),
+  hasStudyMaterial: Boolean(document.uploadedContent?.trim()),
 });
 
 const findOwnedAssignment = async (

@@ -26,7 +26,8 @@ export const generateExamPaperPdf = async (
 
   logger.info({ assignmentId, outputPath }, 'Generating exam paper PDF');
 
-  const browser = await puppeteer.launch({
+   const browser = await puppeteer.launch({
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
@@ -40,8 +41,8 @@ export const generateExamPaperPdf = async (
       printBackground: true,
       preferCSSPageSize: true,
       margin: {
-        top: '18mm',
-        bottom: '18mm',
+        top: '14mm',
+        bottom: '14mm',
         left: '15mm',
         right: '15mm',
       },

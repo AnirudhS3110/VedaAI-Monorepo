@@ -1,0 +1,45 @@
+# Root node modules
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# Coverage
+coverage/
+
+# Turbo
+.turbo/
+
+# Temporary files
+tmp/
+temp/
+
+# PDF storage
+apps/backend/storage/pdfs/
+
+# Excalidraw exports
+architecture/*.png
+architecture/*.jpg
+
+# Optional
+*.zip

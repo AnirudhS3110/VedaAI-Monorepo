@@ -4,9 +4,13 @@ import type { AssignmentStatus } from "@/types/domain";
 export interface AssignmentListItem {
   id: string;
   title: string;
+  subject: string;
   assignedOn: string;
   dueDate: string;
   status: AssignmentStatus;
+  createdAt: string;
+  updatedAt: string;
+  hasStudyMaterial: boolean;
 }
 
 interface AssignmentsState {

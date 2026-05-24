@@ -27,9 +27,13 @@ export function useAssignmentsList() {
       const mapped: AssignmentListItem[] = data.map((a) => ({
         id: a.id,
         title: a.title,
+        subject: a.subject,
         assignedOn: formatAssignedDate(a.createdAt),
         dueDate: formatDisplayDate(a.dueDate),
         status: a.status,
+        createdAt: a.createdAt,
+        updatedAt: a.updatedAt,
+        hasStudyMaterial: a.hasStudyMaterial,
       }));
       setItems(mapped);
     } catch (err) {

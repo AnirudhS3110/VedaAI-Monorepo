@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -32,6 +32,7 @@ import { QuestionTypesSection } from "./question-types-section";
 import { VoiceInputButton } from "./voice-input-button";
 import { organization } from "@/constants/navigation";
 import { useSpeechToText } from "@/hooks/use-speech-to-text";
+import { getTemplateById } from "@/lib/home-templates";
 
 const defaultValues: CreateAssignmentFormValues = {
   title: "",
@@ -53,6 +54,8 @@ const fieldClassName = cn(
 
 export function CreateAssignmentForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const templateAppliedRef = useRef(false);
   const addItem = useAssignmentsStore((s) => s.addItem);
   const [uploadState, setUploadState] =
     useState<UploadExtractionState>(initialUploadState);
@@ -64,6 +67,7 @@ export function CreateAssignmentForm() {
     control,
     setValue,
     getValues,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<CreateAssignmentFormValues>({
@@ -73,6 +77,21 @@ export function CreateAssignmentForm() {
   });
 
   const fieldArray = useFieldArray({ control, name: "questionRows" });
+
+  useEffect(() => {
+    if (templateAppliedRef.current) return;
+    const templateId = searchParams.get("template");
+    if (!templateId) return;
+    const template = getTemplateById(templateId);
+    if (!template) return;
+    templateAppliedRef.current = true;
+    reset({
+      ...defaultValues,
+      title: template.suggestedTitle,
+      instructions: template.instructions,
+      questionRows: template.questionRows,
+    });
+  }, [reset, searchParams]);
 
   const appendSpeech = useCallback(
     (spoken: string) => {
@@ -116,12 +135,17 @@ export function CreateAssignmentForm() {
         // Generating page will reconnect; non-blocking
       }
 
+      const now = new Date().toISOString();
       addItem({
         id: assignmentId,
         title: payload.title,
-        assignedOn: formatAssignedDate(new Date().toISOString()),
+        subject: payload.subject,
+        assignedOn: formatAssignedDate(now),
         dueDate: values.dueDate,
         status: "pending",
+        createdAt: now,
+        updatedAt: now,
+        hasStudyMaterial: Boolean(payload.uploadedContent?.trim()),
       });
 
       router.push(`/assignments/${assignmentId}/generating`);
@@ -294,9 +318,23 @@ export function CreateAssignmentForm() {
                   <VoiceInputButton
                     isListening={speech.isListening}
                     isSupported={speech.isSupported}
+                    unsupportedHint={speech.unsupportedHint}
                     onToggle={speech.toggle}
                   />
                 </div>
+                {!speech.isSupported && speech.unsupportedHint && (
+                  <p className="text-xs leading-relaxed text-muted-foreground">
+                    {speech.unsupportedHint}
+                  </p>
+                )}
+                {speech.isSupported && speech.isBrave && speech.unsupportedHint && (
+                  <p className="text-xs leading-relaxed text-muted-foreground">
+                    {speech.unsupportedHint}
+                  </p>
+                )}
+                {speech.errorMessage && (
+                  <p className="text-xs text-destructive">{speech.errorMessage}</p>
+                )}
                 {speech.isListening && (
                   <p className="text-xs text-red-600/90">
                     Listening… speak clearly, then tap the mic to stop.

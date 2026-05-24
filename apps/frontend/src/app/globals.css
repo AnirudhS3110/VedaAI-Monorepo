@@ -133,6 +133,7 @@
     min-height: 100dvh;
     overflow-x: hidden;
     overflow-y: hidden;
+    scroll-behavior: smooth;
   }
 }
 

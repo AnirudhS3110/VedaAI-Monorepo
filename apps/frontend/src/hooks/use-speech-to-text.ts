@@ -1,6 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  detectBraveBrowser,
+  getSpeechSupportLevel,
+  getSpeechUnsupportedMessage,
+  type SpeechSupportLevel,
+} from "@/lib/browser-compat";
 
 interface SpeechRecognitionResultLike {
   isFinal: boolean;
@@ -11,12 +17,17 @@ interface SpeechRecognitionEventLike {
   results: Iterable<SpeechRecognitionResultLike>;
 }
 
+interface SpeechRecognitionErrorEventLike {
+  error?: string;
+  message?: string;
+}
+
 interface SpeechRecognitionLike extends EventTarget {
   continuous: boolean;
   interimResults: boolean;
   lang: string;
   onresult: ((event: SpeechRecognitionEventLike) => void) | null;
-  onerror: (() => void) | null;
+  onerror: ((event: SpeechRecognitionErrorEventLike) => void) | null;
   onend: (() => void) | null;
   start: () => void;
   stop: () => void;
@@ -25,7 +36,7 @@ interface SpeechRecognitionLike extends EventTarget {
 
 type SpeechRecognitionConstructor = new () => SpeechRecognitionLike;
 
-function getSpeechRecognition(): SpeechRecognitionConstructor | null {
+function getSpeechRecognitionCtor(): SpeechRecognitionConstructor | null {
   if (typeof window === "undefined") return null;
   const w = window as Window & {
     SpeechRecognition?: SpeechRecognitionConstructor;
@@ -34,14 +45,49 @@ function getSpeechRecognition(): SpeechRecognitionConstructor | null {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
+function mapSpeechError(
+  code: string | undefined,
+  isBrave: boolean,
+): string {
+  switch (code) {
+    case "not-allowed":
+    case "service-not-allowed":
+      return getSpeechUnsupportedMessage("full", isBrave);
+    case "audio-capture":
+      return "Microphone not found or blocked. Check system permissions.";
+    case "network":
+      return "Speech service unreachable. Check your connection or try Chrome.";
+    case "no-speech":
+      return "No speech detected. Try speaking again.";
+    case "aborted":
+      return "";
+    default:
+      return code
+        ? `Voice input error (${code}). Try Chrome or adjust Brave Shields.`
+        : "Voice input failed. Try Chrome or allow microphone access.";
+  }
+}
+
 export function useSpeechToText(onTranscript: (text: string) => void) {
   const [isListening, setIsListening] = useState(false);
-  const [isSupported, setIsSupported] = useState(false);
+  const [supportLevel, setSupportLevel] = useState<SpeechSupportLevel>("unsupported");
+  const [isBrave, setIsBrave] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
+  const isSupported = supportLevel === "full";
+
   useEffect(() => {
-    setIsSupported(getSpeechRecognition() !== null);
+    setSupportLevel(getSpeechSupportLevel());
+    void detectBraveBrowser().then(setIsBrave);
   }, []);
+
+  const unsupportedHint =
+    supportLevel !== "full"
+      ? getSpeechUnsupportedMessage(supportLevel, isBrave)
+      : isBrave
+        ? getSpeechUnsupportedMessage("full", true)
+        : null;
 
   const stop = useCallback(() => {
     recognitionRef.current?.stop();
@@ -49,16 +95,39 @@ export function useSpeechToText(onTranscript: (text: string) => void) {
     setIsListening(false);
   }, []);
 
-  const start = useCallback(() => {
-    const SpeechRecognitionCtor = getSpeechRecognition();
-    if (!SpeechRecognitionCtor) return;
+  const start = useCallback(async () => {
+    const SpeechRecognitionCtor = getSpeechRecognitionCtor();
+    if (!SpeechRecognitionCtor || supportLevel !== "full") {
+      setErrorMessage(
+        getSpeechUnsupportedMessage(supportLevel, isBrave),
+      );
+      return;
+    }
 
+    setErrorMessage(null);
     stop();
+
+    if (navigator.permissions?.query) {
+      try {
+        const mic = await navigator.permissions.query({
+          name: "microphone" as PermissionName,
+        });
+        if (mic.state === "denied") {
+          setErrorMessage(getSpeechUnsupportedMessage("full", isBrave));
+          return;
+        }
+      } catch {
+        /* Permissions API optional */
+      }
+    }
 
     const recognition = new SpeechRecognitionCtor();
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.lang = "en-IN";
+    recognition.lang =
+      typeof navigator !== "undefined" && navigator.language
+        ? navigator.language
+        : "en-IN";
 
     recognition.onresult = (event: SpeechRecognitionEventLike) => {
       let finalText = "";
@@ -73,7 +142,9 @@ export function useSpeechToText(onTranscript: (text: string) => void) {
       }
     };
 
-    recognition.onerror = () => {
+    recognition.onerror = (event: SpeechRecognitionErrorEventLike) => {
+      const msg = mapSpeechError(event.error, isBrave);
+      if (msg) setErrorMessage(msg);
       setIsListening(false);
       recognitionRef.current = null;
     };
@@ -83,16 +154,24 @@ export function useSpeechToText(onTranscript: (text: string) => void) {
       recognitionRef.current = null;
     };
 
-    recognitionRef.current = recognition;
-    recognition.start();
-    setIsListening(true);
-  }, [onTranscript, stop]);
+    try {
+      recognitionRef.current = recognition;
+      recognition.start();
+      setIsListening(true);
+    } catch {
+      setErrorMessage(
+        getSpeechUnsupportedMessage("full", isBrave),
+      );
+      recognitionRef.current = null;
+      setIsListening(false);
+    }
+  }, [isBrave, onTranscript, stop, supportLevel]);
 
   const toggle = useCallback(() => {
     if (isListening) {
       stop();
     } else {
-      start();
+      void start();
     }
   }, [isListening, start, stop]);
 
@@ -102,5 +181,14 @@ export function useSpeechToText(onTranscript: (text: string) => void) {
     };
   }, []);
 
-  return { isListening, isSupported, toggle, stop };
+  return {
+    isListening,
+    isSupported,
+    supportLevel,
+    isBrave,
+    errorMessage,
+    unsupportedHint,
+    toggle,
+    stop,
+  };
 }

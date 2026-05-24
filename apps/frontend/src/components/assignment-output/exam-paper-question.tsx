@@ -4,7 +4,6 @@ import {
   isMcqWithOptions,
   MCQ_OPTION_LABELS,
 } from "@/lib/exam-paper";
-import { cn } from "@/lib/utils";
 
 interface ExamPaperQuestionProps {
   number: number;
@@ -13,37 +12,24 @@ interface ExamPaperQuestionProps {
 
 export function ExamPaperQuestion({ number, question }: ExamPaperQuestionProps) {
   const showMcqOptions = isMcqWithOptions(question);
+  const diffClass = `difficulty-${question.difficulty}`;
 
   return (
-    <li className="min-w-0 text-sm leading-[1.65] text-foreground sm:text-[15px] sm:leading-relaxed">
-      <div className="min-w-0">
-        <span className="font-medium tabular-nums">{number}. </span>
-        <span
-          className={cn(
-            "mr-1 font-medium",
-            question.difficulty === "easy" && "text-emerald-700",
-            question.difficulty === "medium" && "text-amber-700",
-            question.difficulty === "hard" && "text-red-700",
-          )}
-        >
+    <li className="question-item">
+      <div className="question-stem">
+        <span className="question-number">{number}. </span>
+        <span className={`difficulty-label ${diffClass}`}>
           [{DIFFICULTY_LABELS[question.difficulty]}]
         </span>{" "}
-        <span className="break-words [overflow-wrap:anywhere]">
-          {question.text}
-        </span>{" "}
-        <span className="whitespace-nowrap font-medium text-foreground/80">
-          [{question.marks} Marks]
-        </span>
+        <span className="question-text">{question.text}</span>
+        <span className="question-marks"> [{question.marks} Marks]</span>
       </div>
 
       {showMcqOptions ? (
-        <ol className="mt-2.5 list-none space-y-2 pl-4 sm:mt-3 sm:space-y-1.5 sm:pl-6">
+        <ol className="mcq-options">
           {question.options.map((option, index) => (
-            <li
-              key={`${number}-${index}-${option.slice(0, 24)}`}
-              className="min-w-0 break-words text-sm sm:text-[15px]"
-            >
-              <span className="font-medium tabular-nums">
+            <li key={`${number}-${index}`} className="mcq-option">
+              <span className="mcq-label">
                 {MCQ_OPTION_LABELS[index] ?? String(index + 1)}.
               </span>{" "}
               {option}
@@ -51,7 +37,7 @@ export function ExamPaperQuestion({ number, question }: ExamPaperQuestionProps) 
           ))}
         </ol>
       ) : question.type === "mcq" && question.answer ? (
-        <p className="mt-2 pl-4 text-xs text-muted-foreground sm:pl-6 sm:text-sm">
+        <p className="mt-1 pl-5 text-[9.5pt] text-muted-foreground">
           (Legacy MCQ — see answer key)
         </p>
       ) : null}

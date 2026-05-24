@@ -11,6 +11,7 @@ import { getErrorMessage } from "@/lib/api/errors";
 import { cn } from "@/lib/utils";
 import { DeleteAssignmentDialog } from "./delete-assignment-dialog";
 import { ToastBanner } from "@/components/shared/toast-banner";
+import { useRouter } from "next/navigation";
 
 interface AssignmentCardProps {
   assignment: AssignmentListItem;
@@ -27,6 +28,8 @@ export function AssignmentCard({ assignment, index = 0 }: AssignmentCardProps) {
     variant: "success" | "error";
   } | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -69,13 +72,16 @@ export function AssignmentCard({ assignment, index = 0 }: AssignmentCardProps) {
           delay: Math.min(index * 0.05, 0.25),
           ease: [0.25, 0.1, 0.25, 1],
         }}
+        onClick={()=>{
+          router.push(`/assignments/${assignment.id}`);
+        }}
         className={cn(
-          "relative flex min-w-0 flex-col rounded-2xl border border-border/70 bg-card",
+          "relative flex min-w-0 cursor-pointer  flex-col rounded-2xl border border-border/70 bg-card",
           "p-4 shadow-[0_2px_12px_rgba(0,0,0,0.06)] transition-[transform,box-shadow]",
           "sm:p-5 lg:hover:-translate-y-0.5 lg:hover:shadow-md",
         )}
       >
-        <div className="flex items-start justify-between gap-3">
+        <div  className="flex items-start justify-between gap-3 cursor-pointer">
           <Link
             href={`/assignments/${assignment.id}`}
             className="min-w-0 flex-1 pr-1"

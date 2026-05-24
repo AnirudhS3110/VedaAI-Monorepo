@@ -40,9 +40,11 @@ const buildSectionsHtml = (
 
       return `
       <section class="paper-section">
-        <h2 class="section-title">${escapeHtml(section.title)}</h2>
-        <h3 class="section-type-heading">${escapeHtml(sectionTypeHeading(section.questions))}</h3>
-        <p class="section-instruction">${escapeHtml(section.instruction)}</p>
+        <div class="section-intro">
+          <h2 class="section-title">${escapeHtml(section.title)}</h2>
+          <h3 class="section-type-heading">${escapeHtml(sectionTypeHeading(section.questions))}</h3>
+          <p class="section-instruction">${escapeHtml(section.instruction)}</p>
+        </div>
         <ol class="questions-list">
           ${questionsHtml}
         </ol>
@@ -92,13 +94,27 @@ export const buildExamPaperHtml = (
   <article class="exam-paper">
     <header class="exam-header">
       <h1 class="school-name">${escapeHtml(schoolName)}</h1>
-      <p class="exam-meta-line">Subject: ${escapeHtml(assignment.subject)}</p>
-      <p class="exam-meta-line">Class: ${escapeHtml(className)}</p>
+      <div class="exam-meta-grid">
+        <p>
+          <span class="field-label">Subject:</span>
+          <span class="field-value"> ${escapeHtml(assignment.subject)}</span>
+        </p>
+        <p>
+          <span class="field-label">Class:</span>
+          <span class="field-value"> ${escapeHtml(className)}</span>
+        </p>
+      </div>
     </header>
 
     <div class="exam-meta-row">
-      <span>Time Allowed: ${timeMinutes} minutes</span>
-      <span>Maximum Marks: ${assignment.totalMarks}</span>
+      <span>
+        <span class="field-label">Time Allowed:</span>
+        <span class="field-value"> ${timeMinutes} minutes</span>
+      </span>
+      <span>
+        <span class="field-label">Maximum Marks:</span>
+        <span class="field-value"> ${assignment.totalMarks}</span>
+      </span>
     </div>
 
     <p class="compulsory-note">
@@ -106,16 +122,26 @@ export const buildExamPaperHtml = (
     </p>
 
     <div class="student-fields">
-      <p class="student-field">
-        Name: <span class="student-field-line student-field-line--name"></span>
-      </p>
-      <p class="student-field">
-        Roll Number: <span class="student-field-line student-field-line--roll"></span>
-      </p>
-      <p class="student-field">
-        Class: ${escapeHtml(className)} Section:
-        <span class="student-field-line student-field-line--section"></span>
-      </p>
+      <div class="student-row">
+        <span class="student-cell">
+          <span class="field-label">Name:</span>
+          <span class="student-field-line student-field-line--name"></span>
+        </span>
+        <span class="student-cell">
+          <span class="field-label">Roll No:</span>
+          <span class="student-field-line student-field-line--roll"></span>
+        </span>
+      </div>
+      <div class="student-row">
+        <span class="student-cell">
+          <span class="field-label">Class:</span>
+          <span class="field-value">${escapeHtml(className)}</span>
+        </span>
+        <span class="student-cell">
+          <span class="field-label">Section:</span>
+          <span class="student-field-line student-field-line--section"></span>
+        </span>
+      </div>
     </div>
 
     ${sectionsHtml}

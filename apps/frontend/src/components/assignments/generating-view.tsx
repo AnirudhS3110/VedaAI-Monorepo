@@ -76,16 +76,19 @@ export function GeneratingView({ assignmentId }: GeneratingViewProps) {
 
         const syncPayload = statusToGenerationPayload(detail);
         if (syncPayload && detail.status !== "completed") {
-          updateFromEvent(syncPayload);
+          updateFromEvent(syncPayload, { source: "poll" });
         }
 
         if (detail.status === "completed") {
-          updateFromEvent({
-            assignmentId,
-            status: "completed",
-            progress: 100,
-            message: "Generation completed",
-          });
+          updateFromEvent(
+            {
+              assignmentId,
+              status: "completed",
+              progress: 100,
+              message: "Generation completed",
+            },
+            { source: "poll" },
+          );
           handleCompleted();
         } else if (detail.status === "failed") {
           handleFailed("Generation failed.");

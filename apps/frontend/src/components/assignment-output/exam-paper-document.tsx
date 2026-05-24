@@ -1,5 +1,6 @@
 "use client";
 
+import "@/styles/exam-paper-document.css";
 import { organization } from "@/constants/navigation";
 import {
   estimateTimeAllowedMinutes,
@@ -32,45 +33,63 @@ export function ExamPaperDocument({
   );
   const timeMinutes = estimateTimeAllowedMinutes(assignment.totalMarks);
   const dueDisplay = formatDisplayDate(assignment.dueDate);
+  const schoolName =
+    assignment.schoolName?.trim() || organization.defaultSchoolName;
+  const className =
+    assignment.className?.trim() || organization.defaultClassName;
 
   return (
-    <article
-      className="w-full min-w-0 overflow-hidden rounded-xl bg-white px-4 py-5 font-[family-name:var(--font-document)] text-foreground shadow-[0_2px_16px_rgba(0,0,0,0.08)] sm:rounded-2xl sm:px-8 sm:py-10 sm:shadow-lg lg:px-12 lg:py-12 print:rounded-none print:shadow-none"
-    >
-      <header className="text-center">
-        <h1 className="text-base font-bold leading-snug sm:text-lg lg:text-xl">
-          {assignment.schoolName || organization.defaultSchoolName}
-        </h1>
-        <p className="mt-2 text-sm sm:text-base">Subject: {assignment.subject}</p>
-        <p className="text-sm sm:text-base">
-          Class: {assignment.className || organization.defaultClassName}
-        </p>
+    <article className="exam-paper-preview w-full min-w-0 overflow-hidden rounded-xl px-4 py-5 shadow-[0_2px_16px_rgba(0,0,0,0.08)] sm:rounded-2xl sm:px-6 sm:py-8 print:rounded-none print:shadow-none">
+      <header className="exam-header">
+        <h1 className="school-name">{schoolName}</h1>
+        <div className="exam-meta-grid">
+          <p>
+            <span className="field-label">Subject:</span>
+            <span className="field-value"> {assignment.subject}</span>
+          </p>
+          <p>
+            <span className="field-label">Class:</span>
+            <span className="field-value"> {className}</span>
+          </p>
+        </div>
       </header>
 
-      <div className="mt-5 flex flex-col gap-1 text-sm sm:mt-6 sm:flex-row sm:justify-between sm:gap-4">
-        <span>Time Allowed: {timeMinutes} minutes</span>
-        <span className="sm:text-right">Maximum Marks: {assignment.totalMarks}</span>
+      <div className="exam-meta-row">
+        <span>
+          <span className="field-label">Time Allowed:</span>
+          <span className="field-value"> {timeMinutes} minutes</span>
+        </span>
+        <span>
+          <span className="field-label">Maximum Marks:</span>
+          <span className="field-value"> {assignment.totalMarks}</span>
+        </span>
       </div>
 
-      <p className="mt-3 text-sm leading-relaxed sm:mt-4">
+      <p className="compulsory-note">
         All questions are compulsory unless stated otherwise.
       </p>
 
-      <div className="mt-5 space-y-3 text-sm sm:mt-6 sm:space-y-2">
-        <p className="flex flex-col gap-1.5 sm:flex-row sm:items-end">
-          <span className="shrink-0 font-medium sm:font-normal">Name:</span>
-          <span className="inline-block min-h-[1.25rem] min-w-0 flex-1 border-b border-foreground/40 sm:min-w-[200px]" />
-        </p>
-        <p className="flex flex-col gap-1.5 sm:flex-row sm:items-end">
-          <span className="shrink-0 font-medium sm:font-normal">Roll Number:</span>
-          <span className="inline-block min-h-[1.25rem] min-w-0 flex-1 border-b border-foreground/40 sm:min-w-[160px]" />
-        </p>
-        <p className="flex flex-col gap-1.5 sm:flex-row sm:items-end">
-          <span className="shrink-0 font-medium sm:font-normal">
-            Class: {assignment.className || organization.defaultClassName} Section:
+      <div className="student-fields">
+        <div className="student-row">
+          <span className="student-cell">
+            <span className="field-label">Name:</span>
+            <span className="student-field-line student-field-line--name" />
           </span>
-          <span className="inline-block min-h-[1.25rem] min-w-0 flex-1 border-b border-foreground/40 sm:min-w-[120px]" />
-        </p>
+          <span className="student-cell">
+            <span className="field-label">Roll No:</span>
+            <span className="student-field-line student-field-line--roll" />
+          </span>
+        </div>
+        <div className="student-row">
+          <span className="student-cell">
+            <span className="field-label">Class:</span>
+            <span className="field-value">{className}</span>
+          </span>
+          <span className="student-cell">
+            <span className="field-label">Section:</span>
+            <span className="student-field-line student-field-line--section" />
+          </span>
+        </div>
       </div>
 
       {paper.sections.map((section) => (
@@ -83,33 +102,21 @@ export function ExamPaperDocument({
         />
       ))}
 
-      <p className="mt-8 text-center text-sm font-bold sm:mt-10 sm:text-base">
-        End of Question Paper
-      </p>
+      <p className="end-marker">End of Question Paper</p>
 
-      <section className="mt-8 border-t-2 border-foreground/15 pt-8 sm:mt-12 sm:border-foreground/20 sm:pt-10">
-        <h2 className="text-base font-bold tracking-tight sm:text-lg">
-          Answer Key
-        </h2>
-        <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
-          Model answers for teacher reference
-        </p>
-        <ol className="mt-5 list-decimal space-y-4 break-words pl-5 text-sm leading-[1.65] sm:mt-6 sm:space-y-3.5 sm:pl-6 sm:text-[15px] sm:leading-relaxed">
+      <section className="answer-key">
+        <h2 className="answer-key-title">Answer Key:</h2>
+        <p className="answer-key-subtitle">Model answers for teacher reference</p>
+        <ol className="answer-key-list">
           {flat.map(({ question, number }) => (
-            <li
-              key={number}
-              className="min-w-0 [overflow-wrap:anywhere]"
-            >
-              <span className="font-medium tabular-nums text-foreground/70">
-                Q{number}.{" "}
-              </span>
+            <li key={number} className="answer-key-item" value={number}>
               {getQuestionAnswer(question)}
             </li>
           ))}
         </ol>
       </section>
 
-      <p className="mt-6 text-center text-[11px] text-muted-foreground sm:mt-8 sm:text-xs print:hidden">
+      <p className="exam-footer print:hidden">
         Due: {dueDisplay} · Generated by VedaAI
       </p>
     </article>

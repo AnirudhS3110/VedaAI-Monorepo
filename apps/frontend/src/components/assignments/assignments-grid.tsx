@@ -9,7 +9,7 @@ interface AssignmentsGridProps {
 
 export function AssignmentsGrid({ assignments }: AssignmentsGridProps) {
   return (
-    <ul className="grid min-w-0 list-none grid-cols-1 gap-3.5 sm:gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <ul className="grid min-w-0 list-none grid-cols-1 gap-3.5 sm:gap-4 md:grid-cols-2 xl:grid-cols-2">
       {assignments.map((assignment, index) => (
         <li key={assignment.id} className="min-w-0">
           <AssignmentCard assignment={assignment} index={index} />

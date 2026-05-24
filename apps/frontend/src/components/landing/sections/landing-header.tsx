@@ -11,10 +11,10 @@ import { fadeUpHero } from "../motion";
 
 const navLinks = [
   { href: "#features", label: "Features" },
-  { href: "#workflow", label: "Workflow" },
+  // { href: "#workflow", label: "Workflow" },
   { href: "#architecture", label: "Architecture" },
-  { href: "#mobile", label: "Mobile" },
-  { href: "https://github.com", label: "GitHub", external: true },
+  // { href: "#mobile", label: "Mobile" },
+  { href: "https://github.com/AnirudhS3110/VedaAI-Monorepo", label: "GitHub", external: true },
 ] as const;
 
 export function LandingHeader() {

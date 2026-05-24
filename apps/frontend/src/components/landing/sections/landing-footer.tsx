@@ -3,8 +3,8 @@ import { Code2 } from "lucide-react";
 import { VedaLogo } from "@/components/layout/veda-logo";
 
 const links = [
-  { label: "GitHub", href: "https://github.com",logo: <Code2 className="size-4" />, external: true },
-  { label: "LinkedIn", href: "https://linkedin.com", external: true },
+  { label: "GitHub", href: "https://github.com/AnirudhS3110/VedaAI-Monorepo",logo: <Code2 className="size-4" />, external: true },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/anirudh-selvakumar31/", external: true },
   { label: "Architecture", href: "#architecture", external: false },
 ] as const;
 

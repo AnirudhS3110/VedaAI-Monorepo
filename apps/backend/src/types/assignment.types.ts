@@ -53,4 +53,6 @@ export interface AssignmentListItemResponse {
   dueDate: string;
   status: AssignmentStatus;
   createdAt: string;
+  updatedAt: string;
+  hasStudyMaterial: boolean;
 }

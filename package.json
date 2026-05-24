@@ -1,0 +1,16 @@
+{
+  "name": "vedaai-monorepo",
+  "private": true,
+  "scripts": {
+    "frontend": "cd apps/frontend && npm run dev",
+
+    "backend": "cd apps/backend && npm run dev",
+
+    "workers": "cd apps/backend && npm run workers",
+
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\" \"npm run workers\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

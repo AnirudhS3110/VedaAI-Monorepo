@@ -56,7 +56,7 @@ export function FinalCtaSection() {
               className="h-12 rounded-2xl border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
             >
               <a
-                href="https://github.com"
+                href="https://github.com/AnirudhS3110/VedaAI-Monorepo"
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -16,6 +16,8 @@ export interface AssignmentListItemDto {
   dueDate: string;
   status: import("@/types/domain").AssignmentStatus;
   createdAt: string;
+  updatedAt: string;
+  hasStudyMaterial: boolean;
 }
 
 export const assignmentsApi = {
