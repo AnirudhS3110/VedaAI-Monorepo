@@ -5,6 +5,7 @@ import type { Control, FieldErrors, UseFieldArrayReturn } from "react-hook-form"
 import { useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { QUESTION_TYPE_OPTIONS } from "@/constants/question-types";
+import { cn } from "@/lib/utils";
 import type { CreateAssignmentFormValues } from "@/lib/validations/create-assignment";
 import { QuestionTypeRow } from "./question-type-row";
 
@@ -68,13 +69,26 @@ export function QuestionTypesSection({
         </p>
       )}
 
+      <button
+        type="button"
+        className="touch-manipulation tap-highlight-none flex w-full cursor-pointer items-center gap-2.5 py-1 text-left lg:hidden"
+        onClick={() => append({ type: "short", numQuestions: 5, marks: 2 })}
+      >
+        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-[#1a1a1a] text-white shadow-sm">
+          <Plus className="size-4" strokeWidth={2.5} />
+        </span>
+        <span className="text-sm font-semibold text-foreground">
+          Add Question Type
+        </span>
+      </button>
+
       <Button
         type="button"
         variant="ghost"
-        className="h-10 w-full cursor-pointer gap-1.5 rounded-xl px-2 text-sm font-medium text-foreground sm:h-9 sm:w-auto"
-        onClick={() =>
-          append({ type: "short", numQuestions: 5, marks: 2 })
-        }
+        className={cn(
+          "hidden h-10 cursor-pointer gap-1.5 rounded-xl px-2 text-sm font-medium text-foreground sm:h-9 lg:inline-flex lg:w-auto",
+        )}
+        onClick={() => append({ type: "short", numQuestions: 5, marks: 2 })}
       >
         <Plus className="size-4" />
         Add Question Type

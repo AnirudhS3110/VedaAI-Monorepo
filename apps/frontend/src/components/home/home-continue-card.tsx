@@ -11,6 +11,7 @@ import {
   isInProgress,
   statusLabel,
 } from "@/lib/home-workspace";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 
 interface HomeContinueCardProps {
@@ -40,6 +41,7 @@ export function HomeContinueCard({ assignment }: HomeContinueCardProps) {
       className={cn(
         "flex min-w-[16.5rem] max-w-full shrink-0 flex-col rounded-2xl border border-border/70 bg-card p-4",
         "shadow-[0_2px_12px_rgba(0,0,0,0.05)] sm:min-w-[18rem]",
+        mobileUi.elevatedCard,
       )}
     >
       <div className="flex items-start justify-between gap-2">

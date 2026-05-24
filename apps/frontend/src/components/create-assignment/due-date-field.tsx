@@ -6,6 +6,7 @@ import { useRef } from "react";
 import type { Control, FieldErrors } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import type { CreateAssignmentFormValues } from "@/lib/validations/create-assignment";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 
 interface DueDateFieldProps {
@@ -60,6 +61,7 @@ export function DueDateField({ control, error }: DueDateFieldProps) {
               className={cn(
                 "h-11 w-full cursor-pointer rounded-full border border-border bg-background px-4 pr-11 text-sm shadow-sm outline-none",
                 "focus-visible:ring-2 focus-visible:ring-ring/30",
+                mobileUi.createFormField,
                 error && "border-destructive",
               )}
             />

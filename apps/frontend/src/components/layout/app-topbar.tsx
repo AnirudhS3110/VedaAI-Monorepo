@@ -14,7 +14,49 @@ import {
   getMobileTopbarConfig,
   shouldShowDesktopBack,
 } from "@/lib/mobile-topbar";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
+
+function MobilePageTitleBar({
+  title,
+  backHref,
+  onBack,
+}: {
+  title: string;
+  backHref?: string;
+  onBack?: () => void;
+}) {
+  const backControl = backHref ? (
+    <Link href={backHref} className={mobileUi.backButton} aria-label="Go back">
+      <ArrowLeft className="size-5" />
+    </Link>
+  ) : onBack ? (
+    <button
+      type="button"
+      onClick={onBack}
+      className={mobileUi.backButton}
+      aria-label="Go back"
+    >
+      <ArrowLeft className="size-5" />
+    </button>
+  ) : (
+    <span className="size-10 shrink-0" aria-hidden />
+  );
+
+  return (
+    <div
+      className={cn(
+        "relative flex h-12 items-center px-1",
+        mobileUi.pageTitleBar,
+      )}
+    >
+      {backControl}
+      <h1 className="pointer-events-none absolute inset-x-12 truncate text-center text-base font-semibold text-foreground">
+        {title}
+      </h1>
+    </div>
+  );
+}
 
 function TopbarActions({
   status,
@@ -106,60 +148,50 @@ export function AppTopbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-30 shrink-0 bg-white lg:static lg:bg-transparent",
+        "z-30 shrink-0",
         "pt-[env(safe-area-inset-top)]",
+        "max-lg:bg-transparent max-lg:pb-1",
+        "lg:static lg:bg-transparent",
       )}
     >
       {/* ——— Mobile ——— */}
-      <div className="lg:hidden">
-        {mobileConfig.variant === "tab-root" ? (
+      <div
+        className={cn(
+          "lg:hidden",
+          mobileUi.shellInsetX,
+          mobileUi.shellInsetTop,
+        )}
+      >
+        {mobileConfig.variant === "tab-root" || mobileConfig.variant === "inner" ? (
           <>
+            <div className={mobileUi.topBarShell}>
+              <div className="flex h-14 items-center justify-between gap-3 px-4">
+                <VedaLogo showWordmark compact className="min-w-0 shrink" />
+                {actions}
+              </div>
+            </div>
+            {mobileConfig.title && (
+              <MobilePageTitleBar
+                title={mobileConfig.title}
+                backHref={
+                  mobileConfig.variant === "tab-root"
+                    ? mobileConfig.backHref
+                    : undefined
+                }
+                onBack={
+                  mobileConfig.variant === "inner"
+                    ? () => router.back()
+                    : undefined
+                }
+              />
+            )}
+          </>
+        ) : (
+          <div className={mobileUi.topBarShell}>
             <div className="flex h-14 items-center justify-between gap-3 px-4">
               <VedaLogo showWordmark compact className="min-w-0 shrink" />
               {actions}
             </div>
-            <div className="relative flex h-12 items-center border-t border-border/40 px-2">
-              {mobileConfig.backHref ? (
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="size-10 shrink-0 rounded-full"
-                  asChild
-                >
-                  <Link href={mobileConfig.backHref} aria-label="Go back">
-                    <ArrowLeft className="size-5" />
-                  </Link>
-                </Button>
-              ) : (
-                <span className="size-10 shrink-0" aria-hidden />
-              )}
-              <h1 className="pointer-events-none absolute inset-x-12 truncate text-center text-base font-semibold text-foreground">
-                {mobileConfig.title}
-              </h1>
-            </div>
-          </>
-        ) : mobileConfig.variant === "inner" ? (
-          <div className="grid h-14 grid-cols-[2.5rem_1fr_2.5rem] items-center px-2">
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="size-10 rounded-full"
-              onClick={() => router.back()}
-              aria-label="Go back"
-            >
-              <ArrowLeft className="size-5" />
-            </Button>
-            <h1 className="truncate text-center text-base font-semibold text-foreground">
-              {mobileConfig.title}
-            </h1>
-            <span className="size-10" aria-hidden />
-          </div>
-        ) : (
-          <div className="flex h-14 items-center justify-between gap-3 px-4">
-            <VedaLogo showWordmark compact className="min-w-0 shrink" />
-            {actions}
           </div>
         )}
       </div>

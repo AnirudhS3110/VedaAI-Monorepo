@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { mobileUi } from "@/lib/mobile-ui";
+import { cn } from "@/lib/utils";
 
 export function AssignmentsEmptyState() {
   return (
@@ -12,7 +14,11 @@ export function AssignmentsEmptyState() {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
-      className="flex flex-col items-center justify-center px-4 py-16 text-center"
+      className={cn(
+        "flex flex-col items-center justify-center px-4 py-16 text-center",
+        mobileUi.elevatedCard,
+        "max-lg:mx-0 max-lg:py-14",
+      )}
     >
       <div className="relative mb-8 flex h-52 w-full max-w-[280px] items-center justify-center">
         <div

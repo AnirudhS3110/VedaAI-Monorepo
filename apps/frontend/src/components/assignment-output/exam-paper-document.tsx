@@ -8,6 +8,8 @@ import {
   getQuestionAnswer,
 } from "@/lib/exam-paper";
 import { formatDisplayDate } from "@/lib/format-date";
+import { mobileUi } from "@/lib/mobile-ui";
+import { cn } from "@/lib/utils";
 import type { Assignment, GeneratedPaper } from "@/types/assignment";
 import { ExamPaperSection } from "./exam-paper-section";
 
@@ -39,7 +41,13 @@ export function ExamPaperDocument({
     assignment.className?.trim() || organization.defaultClassName;
 
   return (
-    <article className="exam-paper-preview w-full min-w-0 overflow-hidden rounded-xl px-4 py-5 shadow-[0_2px_16px_rgba(0,0,0,0.08)] sm:rounded-2xl sm:px-6 sm:py-8 print:rounded-none print:shadow-none">
+    <article
+      className={cn(
+        "exam-paper-preview w-full min-w-0 overflow-hidden rounded-xl px-4 py-5 shadow-[0_2px_16px_rgba(0,0,0,0.08)] sm:rounded-2xl sm:px-6 sm:py-8 print:rounded-none print:shadow-none",
+        mobileUi.elevatedCard,
+        "max-lg:px-4 max-lg:py-6",
+      )}
+    >
       <header className="exam-header">
         <h1 className="school-name">{schoolName}</h1>
         <div className="exam-meta-grid">

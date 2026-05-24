@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Sparkles, Wifi, WifiOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { mobileUi } from "@/lib/mobile-ui";
+import { cn } from "@/lib/utils";
 import { getActiveStageIndex, GENERATION_STAGES } from "@/constants/generation-stages";
 import { GenerationProgressRing } from "./generation-progress-ring";
 import { GenerationStageList } from "./generation-stage-list";
@@ -44,7 +46,10 @@ export function GenerationProgressPanel({
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
-      className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
+      className={cn(
+        "overflow-hidden rounded-2xl border border-border bg-card shadow-sm",
+        mobileUi.elevatedCard,
+      )}
     >
       <div className="bg-[#1a1a1a] px-6 py-5 text-white">
         <div className="flex items-start gap-3">

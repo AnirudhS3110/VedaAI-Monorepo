@@ -28,8 +28,8 @@ export function HomeView() {
 
   return (
     <PageTransition>
-      <ContentArea className="min-w-0 pb-6 pt-3 sm:pt-4 lg:pb-10 lg:pt-6">
-        <div className="space-y-8 lg:space-y-10">
+      <ContentArea className="min-w-0 pb-6 pt-3 max-lg:pt-2 sm:pt-4 lg:pb-10 lg:pt-6">
+        <div className="space-y-8 max-lg:space-y-6 lg:space-y-10">
           <HomeGreeting />
           <HomeQuickGenerate />
 

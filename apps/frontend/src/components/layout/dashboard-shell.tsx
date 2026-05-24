@@ -1,5 +1,6 @@
 "use client";
 
+import { mobileUi } from "@/lib/mobile-ui";
 import { responsiveLayout } from "@/lib/responsive-layout";
 import { cn } from "@/lib/utils";
 import { AppSidebar } from "./app-sidebar";
@@ -16,7 +17,12 @@ interface DashboardShellProps {
 export function DashboardShell({ children }: DashboardShellProps) {
   return (
     <MobileNavProvider>
-      <div className="flex h-dvh min-h-0 overflow-hidden overflow-x-hidden bg-workspace">
+      <div
+        className={cn(
+          "flex h-dvh min-h-0 overflow-hidden overflow-x-hidden bg-workspace",
+          mobileUi.shellBackground,
+        )}
+      >
         <div className="hidden h-full shrink-0 lg:flex">
           <AppSidebar />
         </div>
@@ -27,7 +33,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
           <main
             className={cn(
               responsiveLayout.mainScroll,
-              "pb-[calc(5.5rem+env(safe-area-inset-bottom))] lg:pb-0",
+              mobileUi.shellInsetX,
+              "pb-[calc(5.5rem+env(safe-area-inset-bottom))] lg:px-0 lg:pb-0",
             )}
           >
             {children}

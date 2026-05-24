@@ -1,6 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 import type { AssignmentSort, AssignmentStatusFilter } from "@/lib/assignments-filter";
 import { AssignmentsFilterMenu } from "./assignments-filter-menu";
@@ -26,13 +27,17 @@ export function AssignmentsToolbar({
 }: AssignmentsToolbarProps) {
   return (
     <div className={cn("w-full min-w-0", className)}>
-      <div className="flex items-center gap-2.5 lg:hidden ">
+      <div
+        className={cn(
+          "flex items-center gap-2.5 lg:hidden",
+          mobileUi.toolbarShell,
+        )}
+      >
         <AssignmentsFilterMenu
           statusFilter={statusFilter}
           sort={sort}
           onStatusChange={onStatusFilterChange}
           onSortChange={onSortChange}
-          
         />
 
         <div className="relative min-w-0 flex-1">
@@ -43,7 +48,7 @@ export function AssignmentsToolbar({
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search Name"
             aria-label="Search assignments"
-            className="h-11 w-full min-w-0 rounded-full border border-border bg-card py-2 pl-11 pr-4 text-sm shadow-sm outline-none transition-shadow placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/30"
+            className="h-11 w-full min-w-0 rounded-full border border-border/80 bg-background py-2 pl-11 pr-4 text-sm shadow-[0_2px_8px_rgba(0,0,0,0.04)] outline-none transition-shadow placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/30"
           />
         </div>
       </div>

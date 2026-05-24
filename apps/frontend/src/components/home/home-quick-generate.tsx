@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, FileUp, Sparkles } from "lucide-react";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 
 export function HomeQuickGenerate() {
@@ -8,6 +9,7 @@ export function HomeQuickGenerate() {
       className={cn(
         "relative overflow-hidden rounded-2xl border border-border/70 bg-card",
         "p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)] sm:p-6",
+        mobileUi.elevatedCard,
       )}
     >
       <div

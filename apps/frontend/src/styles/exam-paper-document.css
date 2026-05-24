@@ -273,4 +273,89 @@
   .exam-paper-preview .section-actions {
     display: none !important;
   }
+
+  .exam-paper-preview .student-row {
+    flex-direction: row;
+  }
+
+  .exam-paper-preview .student-cell {
+    flex: 1 1 45%;
+    width: auto;
+  }
+
+  .exam-paper-preview .student-field-line {
+    display: inline-block;
+    flex: 1;
+    width: auto;
+    margin-top: 0;
+  }
 }
+
+/* Mobile preview only (< lg) — stack student fields; avoid overlapping lines */
+@media (max-width: 1023px) {
+  .exam-paper-preview {
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .exam-paper-preview .exam-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .exam-paper-preview .exam-meta-grid {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .exam-paper-preview .student-fields {
+    margin-top: 0.65rem;
+    padding-top: 0.55rem;
+  }
+
+  .exam-paper-preview .student-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.55rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .exam-paper-preview .student-cell {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    row-gap: 0.2rem;
+  }
+
+  .exam-paper-preview .student-field-line {
+    display: block;
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-top: 0.15rem;
+  }
+
+  .exam-paper-preview .student-field-line--name,
+  .exam-paper-preview .student-field-line--roll,
+  .exam-paper-preview .student-field-line--section {
+    min-width: 0;
+  }
+
+  .exam-paper-preview .field-label {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .exam-paper-preview .question-stem,
+  .exam-paper-preview .section-title,
+  .exam-paper-preview .school-name {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+

@@ -1,13 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type SyntheticEvent } from "react";
 import { motion } from "framer-motion";
 import { MoreVertical } from "lucide-react";
 import type { AssignmentListItem } from "@/stores/assignments-store";
 import { useAssignmentsStore } from "@/stores/assignments-store";
 import { assignmentsApi } from "@/lib/api/assignments";
 import { getErrorMessage } from "@/lib/api/errors";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 import { DeleteAssignmentDialog } from "./delete-assignment-dialog";
 import { ToastBanner } from "@/components/shared/toast-banner";
@@ -44,6 +44,11 @@ export function AssignmentCard({ assignment, index = 0 }: AssignmentCardProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
 
+  /** Block the card's onClick — do not call preventDefault (breaks menu links). */
+  const stopCardNavigation = (e: SyntheticEvent) => {
+    e.stopPropagation();
+  };
+
   const handleDeleteConfirm = useCallback(async () => {
     setIsDeleting(true);
     try {
@@ -76,31 +81,35 @@ export function AssignmentCard({ assignment, index = 0 }: AssignmentCardProps) {
           router.push(`/assignments/${assignment.id}`);
         }}
         className={cn(
-          "relative flex min-w-0 cursor-pointer  flex-col rounded-2xl border border-border/70 bg-card",
+          "relative flex min-w-0 cursor-pointer flex-col rounded-2xl border border-border/70 bg-card",
           "p-4 shadow-[0_2px_12px_rgba(0,0,0,0.06)] transition-[transform,box-shadow]",
+          mobileUi.elevatedCard,
           "sm:p-5 lg:hover:-translate-y-0.5 lg:hover:shadow-md",
         )}
       >
-        <div  className="flex items-start justify-between gap-3 cursor-pointer">
-          <Link
-            href={`/assignments/${assignment.id}`}
-            className="min-w-0 flex-1 pr-1"
+        <div className="flex items-start justify-between gap-3">
+          <h3
+            className={cn(
+              "min-w-0 flex-1 pr-1 text-base font-semibold leading-snug text-foreground",
+              "underline decoration-foreground/25 underline-offset-[3px] lg:no-underline",
+              "line-clamp-3 break-words",
+            )}
           >
-            <h3
-              className={cn(
-                "text-base font-semibold leading-snug text-foreground",
-                "underline decoration-foreground/25 underline-offset-[3px] lg:no-underline",
-                "line-clamp-3 break-words",
-              )}
-            >
-              {assignment.title}
-            </h3>
-          </Link>
+            {assignment.title}
+          </h3>
 
-          <div className="relative shrink-0" ref={menuRef}>
+          <div
+            className="relative shrink-0"
+            ref={menuRef}
+            onClick={stopCardNavigation}
+            onPointerDown={stopCardNavigation}
+          >
             <button
               type="button"
-              onClick={() => setMenuOpen((open) => !open)}
+              onClick={(e) => {
+                stopCardNavigation(e);
+                setMenuOpen((open) => !open);
+              }}
               className={cn(
                 "touch-manipulation tap-highlight-none flex size-10 items-center justify-center rounded-xl text-muted-foreground transition-colors",
                 "active:scale-95 active:bg-muted lg:hover:bg-muted lg:hover:text-foreground",
@@ -120,20 +129,27 @@ export function AssignmentCard({ assignment, index = 0 }: AssignmentCardProps) {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.15 }}
                 className="absolute right-0 top-full z-[60] mt-1 min-w-[11rem] overflow-hidden rounded-xl border border-border bg-card py-1 shadow-lg"
+                onClick={stopCardNavigation}
+                onPointerDown={stopCardNavigation}
               >
-                <Link
-                  href={`/assignments/${assignment.id}`}
+                <button
+                  type="button"
                   role="menuitem"
-                  className="block min-h-[44px] px-4 py-3 text-sm font-medium text-foreground transition-colors active:bg-muted lg:py-2.5 lg:hover:bg-muted"
-                  onClick={() => setMenuOpen(false)}
+                  className="block w-full min-h-[44px] px-4 py-3 text-left text-sm font-medium text-foreground transition-colors active:bg-muted lg:py-2.5 lg:hover:bg-muted"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMenuOpen(false);
+                    router.push(`/assignments/${assignment.id}`);
+                  }}
                 >
                   View Assignment
-                </Link>
+                </button>
                 <button
                   type="button"
                   role="menuitem"
                   className="min-h-[44px] w-full px-4 py-3 text-left text-sm font-medium text-red-600 transition-colors active:bg-red-50 lg:py-2.5 lg:hover:bg-red-50"
-                  onClick={() => {
+                  onClick={(e) => {
+                    stopCardNavigation(e);
                     setMenuOpen(false);
                     setConfirmOpen(true);
                   }}

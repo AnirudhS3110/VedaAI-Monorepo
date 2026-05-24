@@ -21,6 +21,7 @@ import { getErrorMessage } from "@/lib/api/errors";
 import { formatAssignedDate } from "@/lib/format-date";
 import { initialUploadState } from "@/lib/upload/types";
 import type { UploadExtractionState } from "@/lib/upload/types";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 import { useAssignmentsStore } from "@/stores/assignments-store";
 import type { CreateAssignmentPayload } from "@/types/assignment";
@@ -50,6 +51,7 @@ const defaultValues: CreateAssignmentFormValues = {
 const fieldClassName = cn(
   "h-11 w-full min-w-0 rounded-xl border border-border bg-background px-4 text-base shadow-sm outline-none sm:text-sm",
   "focus-visible:ring-2 focus-visible:ring-ring/30",
+  mobileUi.createFormField,
 );
 
 export function CreateAssignmentForm() {
@@ -158,8 +160,8 @@ export function CreateAssignmentForm() {
   });
 
   return (
-    <PageTransition className="min-w-0">
-      <ContentArea className="max-w-5xl pb-6 pt-3 sm:pt-4 lg:pb-8 lg:pt-8 max-lg:pb-32">
+    <PageTransition className={cn("min-w-0", mobileUi.createFormPage)}>
+      <ContentArea className="max-w-5xl max-lg:px-0 pb-6 pt-3 sm:pt-4 lg:pb-8 lg:pt-8 max-lg:pb-32">
         <PageHeader
           title="Create Assignment"
           description="Set up a new assignment for your students"
@@ -185,7 +187,12 @@ export function CreateAssignmentForm() {
           onSubmit={onSubmit}
           className="mt-4 space-y-5 sm:mt-6 sm:space-y-6"
         >
-          <div className="rounded-2xl border border-border/80 bg-white/50 p-4 shadow-sm sm:p-6 lg:p-8">
+          <div
+            className={cn(
+              "rounded-2xl border border-border/80 bg-white/50 p-4 shadow-sm sm:p-6 lg:p-8",
+              
+            )}
+          >
             <div className="mb-5 sm:mb-6">
               <h2 className="text-base font-semibold text-foreground sm:text-lg">
                 Assignment Details
@@ -312,6 +319,7 @@ export function CreateAssignmentForm() {
                     className={cn(
                       "w-full min-w-0 resize-none rounded-2xl border-2 border-dashed border-border bg-muted/20 px-4 py-3 pr-14 text-base outline-none sm:text-sm",
                       "placeholder:text-muted-foreground focus-visible:border-border focus-visible:ring-2 focus-visible:ring-ring/20",
+                      mobileUi.createFormTextarea,
                       errors.instructions && "border-destructive",
                     )}
                   />

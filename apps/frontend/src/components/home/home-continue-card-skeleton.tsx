@@ -1,3 +1,4 @@
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 
 export function HomeContinueCardSkeleton({ className }: { className?: string }) {
@@ -6,6 +7,7 @@ export function HomeContinueCardSkeleton({ className }: { className?: string }) 
       className={cn(
         "flex min-w-[16.5rem] max-w-full shrink-0 flex-col rounded-2xl border border-border/70 bg-card p-4",
         "shadow-[0_2px_12px_rgba(0,0,0,0.05)] sm:min-w-[18rem]",
+        mobileUi.elevatedCard,
         className,
       )}
       aria-hidden

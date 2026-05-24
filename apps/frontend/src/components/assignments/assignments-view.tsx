@@ -41,7 +41,7 @@ export function AssignmentsView({ showEmpty = false }: AssignmentsViewProps) {
 
   return (
     <PageTransition>
-      <ContentArea className="min-w-0 pb-4 pt-3 sm:pt-4 lg:pb-8 lg:pt-8">
+      <ContentArea className="min-w-0 pb-4 pt-3 max-lg:pt-2 sm:pt-4 lg:pb-8 lg:pt-8">
         {!isEmpty && (
           <PageHeader
             title="Assignments"
@@ -60,7 +60,7 @@ export function AssignmentsView({ showEmpty = false }: AssignmentsViewProps) {
         ) : isEmpty ? (
           <AssignmentsEmptyState />
         ) : (
-          <div className="space-y-4 lg:space-y-6">
+          <div className="space-y-4 max-lg:space-y-5 lg:space-y-6">
             <AssignmentsToolbar
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}

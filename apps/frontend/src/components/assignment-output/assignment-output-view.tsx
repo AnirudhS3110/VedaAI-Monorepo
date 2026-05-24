@@ -175,7 +175,7 @@ export function AssignmentOutputView({
 
   return (
     <PageTransition className="pb-8 max-lg:pb-6 lg:pb-12">
-      <ContentArea className="max-w-3xl min-w-0 space-y-3 px-4 pt-2 sm:space-y-6 sm:px-6 sm:pt-4 lg:px-8">
+      <ContentArea className="max-w-3xl min-w-0 space-y-3 max-lg:space-y-4 max-lg:px-0 max-lg:pt-1 pt-2 sm:space-y-6 sm:pt-4 lg:px-8">
         <AssignmentAiBanner
           message={bannerMessage}
           onDownloadPdf={() => void handleDownloadPdf()}

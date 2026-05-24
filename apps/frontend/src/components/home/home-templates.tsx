@@ -4,6 +4,7 @@ import {
   ASSIGNMENT_TEMPLATES,
   buildCreateUrlFromTemplate,
 } from "@/lib/home-templates";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 import { HomeSection } from "./home-section";
 
@@ -21,6 +22,7 @@ export function HomeTemplates() {
             className={cn(
               "group flex flex-col rounded-2xl border border-border/70 bg-card p-4",
               "shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-[border-color,box-shadow,transform]",
+              mobileUi.elevatedCard,
               "hover:border-border hover:shadow-md lg:hover:-translate-y-0.5",
             )}
           >

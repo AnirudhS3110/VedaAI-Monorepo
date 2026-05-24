@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { mobileBottomNavItems } from "@/constants/navigation";
+import { mobileUi } from "@/lib/mobile-ui";
 import { isNavActive } from "@/lib/nav-utils";
 import { cn } from "@/lib/utils";
 
@@ -15,7 +16,12 @@ export function MobileBottomNav() {
       className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden"
       aria-label="Main navigation"
     >
-      <div className="mx-auto flex max-w-lg items-center justify-around rounded-full bg-[#1a1a1a] px-2 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.28)]">
+      <div
+        className={cn(
+          "mx-auto flex max-w-lg items-center justify-around rounded-full bg-[#1a1a1a] px-2 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.28)]",
+          mobileUi.bottomNavShadow,
+        )}
+      >
         {mobileBottomNavItems.map((item) => {
           const active = !item.disabled && isNavActive(pathname, item.href);
           const Icon = item.icon;

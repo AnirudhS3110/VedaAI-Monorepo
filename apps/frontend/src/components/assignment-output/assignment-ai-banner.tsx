@@ -27,6 +27,7 @@ export function AssignmentAiBanner({
       className={cn(
         "relative w-full min-w-0 rounded-2xl bg-[#1a1a1a] text-white shadow-md",
         "px-4 pb-16 pt-4 sm:px-6 sm:pb-5 sm:pt-5",
+        "max-lg:shadow-[0_6px_28px_rgba(0,0,0,0.2)]",
       )}
     >
       <p className="text-sm leading-relaxed text-white/90 sm:max-w-[92%]">

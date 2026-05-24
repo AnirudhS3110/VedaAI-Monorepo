@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 
 /** Floating create button — assignments list on mobile (Figma) */
@@ -28,7 +29,10 @@ export function MobileCreateFab() {
     >
       <Link
         href="/assignments/create"
-        className="touch-manipulation tap-highlight-none flex size-14 items-center justify-center rounded-full border border-border/60 bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)] transition-transform active:scale-90"
+        className={cn(
+          "touch-manipulation tap-highlight-none flex size-14 items-center justify-center rounded-full border border-border/60 bg-white shadow-[0_8px_24px_rgba(0,0,0,0.15)] transition-transform active:scale-90",
+          mobileUi.fabShadow,
+        )}
         aria-label="Create assignment"
       >
         <Plus className="size-7 text-orange-500" strokeWidth={2.5} />

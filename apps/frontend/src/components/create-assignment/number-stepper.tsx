@@ -1,6 +1,7 @@
 "use client";
 
 import { Minus, Plus } from "lucide-react";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 
 interface NumberStepperProps {
@@ -27,6 +28,7 @@ export function NumberStepper({
     <div
       className={cn(
         "flex h-11 items-center rounded-full border border-border bg-background",
+        mobileUi.createFormField,
         className,
       )}
     >

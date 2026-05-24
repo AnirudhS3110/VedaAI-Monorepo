@@ -5,6 +5,7 @@ import type { Control, FieldErrors } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { QUESTION_TYPE_OPTIONS } from "@/constants/question-types";
 import type { CreateAssignmentFormValues } from "@/lib/validations/create-assignment";
+import { mobileUi } from "@/lib/mobile-ui";
 import { cn } from "@/lib/utils";
 import { NumberStepper } from "./number-stepper";
 
@@ -29,6 +30,7 @@ export function QuestionTypeRow({
     <div
       className={cn(
         "rounded-xl border border-border/60 bg-muted/20 p-4",
+        "max-lg:border-0 max-lg:bg-transparent max-lg:p-0",
         "sm:border-0 sm:bg-transparent sm:p-0",
         "sm:grid sm:grid-cols-[minmax(0,1fr)_auto_auto_auto] sm:items-center sm:gap-4 sm:border-b sm:border-border/60 sm:pb-4 sm:last:border-0 sm:last:pb-0",
       )}
@@ -47,6 +49,7 @@ export function QuestionTypeRow({
                 className={cn(
                   "h-11 w-full cursor-pointer rounded-full border border-border bg-background px-3 text-sm shadow-sm outline-none",
                   "focus-visible:ring-2 focus-visible:ring-ring/30",
+                  mobileUi.createFormField,
                   rowErrors?.type && "border-destructive",
                 )}
               >
