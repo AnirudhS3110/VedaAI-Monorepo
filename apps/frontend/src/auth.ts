@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+const apiUrl = "https://vedaaiv1-anirudhs.vercel.app";
 
 async function syncUserWithBackend(profile: {
   email?: string | null;
