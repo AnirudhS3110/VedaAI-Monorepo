@@ -13,7 +13,7 @@ export const createApp = (): express.Application => {
   console.log("api key:",process.env.GEMINI_API_KEY);
   app.use(helmet());
   const allowedOrigins = new Set([
-    env.CLIENT_URL,
+    "https://vedaaiv1-anirudhs.vercel.app",
     'http://localhost:3000',
     'http://localhost:3001',
   ]);
